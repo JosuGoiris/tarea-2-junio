@@ -1,0 +1,208 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container-carreras {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 50px;
+    margin-top: 50px;
+}
+
+.container {
+    position: absolute;
+    left: 50px;
+    width: 50vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 1px solid black;
+    border-radius: 20px;
+    height: 50px;
+}
+
+.container-carreras .container div {
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-carreras .container div label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.container-form-principal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 50px;
+    margin-top: 50px;
+}
+
+.container-form-principal .container-form {
+    position: absolute;
+    top: 120px;
+    left: 50px;
+    width: 50vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 350px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.container-form-principal .container-form form {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    position: absolute;
+    left: 30px;
+    padding-top: 10px;
+}
+
+.container-form-principal .container-form form div {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 30px;
+}
+
+.container-form-principal .container-form form div label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.container-form-principal .container-form form div input {
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+.container-form-principal .container-form form div .edad {
+    margin-left: 40px;
+}
+
+.container-form-principal .container-form form div select {
+    margin-left: 25px;
+}
+
+.container-form-principal .container-form form .botones button {
+    margin-right: 5px;
+}
+
+.container-totales {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 50px;
+    margin-top: 50px;
+}
+
+.container-totales .sumagenero {
+    position: absolute;
+    top: 120px;
+    right: 50px;
+    width: 40vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 350px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 20px;
+}
+
+.container-totales .sumagenero div {
+    margin-bottom: 30px;
+}
+
+.container-totales .sumagenero div label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.container-totales .sumaalumnos {
+    position: absolute;
+    display: flex;
+    width: 40vw;
+    height: 200px;
+    top: 470px;
+    right: 50px;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-top: 10px;
+    flex-direction: column;
+}
+
+.container-totales .sumaalumnos div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.container-totales .sumaalumnos div label {
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.container-totales .sumaalumnos div select {
+    width: 230px;
+}
+
+.lista-alumnos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lista-alumnos .container-lista {
+    position: absolute;
+    top: 470px;
+    left: 50px;
+    width: 49vw;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 350px;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+
+.lista-alumnos .container-lista label {
+    margin-bottom: 20px;
+}
+
+.lista-alumnos .container-lista #tabla {
+    position: absolute;
+    top: 50px;
+    width: 45vw;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+tr, th, td {
+    border: 1px solid black;
+}
+
+.lista-alumnos .container-lista .boton-quitar  {
+    position: absolute;
+    top: 370px;
+}

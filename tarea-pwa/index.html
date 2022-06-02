@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- Carreras -->
+    <div class="container-carreras">
+      <div class="container">
+        <div>
+          <label>Carreras:</label>
+        </div>
+        <div>
+          <input type="radio" value="info" name="carrera" class="check info" />
+          <label>Lic. en Informática</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            nvalue="kine"
+            name="carrera"
+            class="check fisioykine"
+          />
+          <label>Fisioterapia y Kinesiología</label>
+        </div>
+        <div>
+          <input type="radio" value="enfe" name="carrera" class="check enfe" />
+          <label>Lic. en Enfermería</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- form -->
+    <div class="container-form-principal">
+      <div class="container-form">
+        <form action="">
+          <fieldset disabled>
+            <div>
+              <label for="">Nombre:</label>
+              <input class="nombre" type="text" placeholder="Nombre" />
+            </div>
+            <div>
+              <label for="">Apellido:</label>
+              <input class="apellido" type="text" placeholder="Apellido:" />
+            </div>
+            <div>
+              <label for="">Telefono:</label>
+              <input type="number" />
+            </div>
+            <div>
+              <label for="">Edad:</label>
+              <input class="edad" type="number" class="edad" />
+            </div>
+            <div>
+              <label for="">Genero:</label>
+              <select class="select">
+                <option value="">Seleccione...</option>
+                <option value="">M</option>
+                <option value="">F</option>
+              </select>
+            </div>
+            <div class="botones">
+              <button class="inscribir">Inscribir Alumno</button>
+              <button>Limpiar Tabla</button>
+              <button>Limpiar Listas</button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
+    <!-- Totales -->
+    <div class="container-totales">
+      <div class="sumagenero">
+        <div>
+          <label for="">Total General Alumnos: </label>
+          <label for="">0</label>
+        </div>
+        <div>
+          <label for="">Cantidad de Alumnos por Carrera y Sexo: </label>
+        </div>
+        <div>
+          <label for="">Mujeres Enfermería: </label>
+          <label for="">0</label>
+        </div>
+        <div>
+          <label for="">Hombres Enfermería: </label>
+          <label for="">0</label>
+        </div>
+        <div>
+          <label for="">Mujeres Fisioterapia: </label>
+          <label for="">0</label>
+        </div>
+        <div>
+          <label for="">Hombres Fisioterapia: </label>
+          <label for="">0</label>
+        </div>
+      </div>
+      <div class="sumaalumnos">
+        <div>
+          <label for="">Lista de Alumnos de Informática</label>
+          <select name="" id="">
+            <option value="">Alumnos de Informática Inscriptos</option>
+          </select>
+        </div>
+        <div>
+          <label for="">Lista de Alumnos de Fisioterapia</label>
+          <select name="" id="">
+            <option value="">Alumnos de Fisioterapia Inscriptos</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista -->
+    <div class="lista-alumnos">
+      <div class="container-lista">
+        <label for="">Lista de Alumnos de Enfermería</label>
+        <table id="tabla">
+          <thead class="thead">
+            <tr>
+              <th id="acciones">---</th>
+              <th id="nombre">Nombre</th>
+              <th id="vacancia">Apellido</th>
+              <th id="salario">Edad</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <div class="boton-quitar">
+          <button>Quitar</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        let valor;
+        let contador = 0;
+        let contadorGeneral = 0;
+        let nombre;
+        let apellido;
+        let edad;
+        let genero;
+
+        $(".check").click(function () {
+          $(".container-carreras").each(function () {
+            if ($(".check:checked")) {
+              $("fieldset").removeAttr("disabled");
+              valor = $(".check:checked").val();
+              console.log(valor);
+              $(".nombre").focus();
+            }
+          });
+        });
+        genero;
+
+        $(".inscribir").click(function (event) {
+          event.preventDefault();
+          if ($(".nombre").val() == "" || $(".apellido").val() == "") {
+            alert("debe de ingresar valores");
+          } else if ($(".edad").val() < 18) {
+            alert("usted es menor");
+          } else if (
+            $(".select option:selected").text() != "M" &&
+            $(".select option:selected").text() != "F"
+          ) {
+            alert("Indique su genero");
+          } else {
+            nombre = $(".nombre").val();
+            apellido = $(".apellido").val();
+            edad = $(".edad").val();
+            genero = $(".select option:selected").text();
+            console.log(genero);
+
+            $("#tabla").append(
+              $("<tr>")
+                .append(
+                  $('<td class="td"><input type="checkbox" class="check">')
+                )
+                .append($("<td>").text(nombre))
+                .append($("<td>").text(apellido))
+                .append($("<td>").text(edad))
+            );
+
+            contador = 1;
+            contadorGeneral = contadorGeneral + contador;
+            console.log(contadorGeneral);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

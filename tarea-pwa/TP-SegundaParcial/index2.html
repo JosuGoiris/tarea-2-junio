@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<!--
+ @author Raúl Caro Pastorino
+ @copyright Copyright © 2017 Raúl Caro Pastorino
+ @license https://wwww.gnu.org/licenses/gpl.txt
+-->
+
+<!--
+Crea una tabla de 10 filas y 3 columnas.
+
+Cuando el ratón pase por cada una de las filas, esta será remarcada cambiando
+el color de fondo hasta que sacamos el ratón de ella.
+
+Al hacer click en una de las celdas pedirá mediante una ventana "prompt()"
+que introduzcamos el valor para que sea almacenado en ella.
+
+En el caso de ya tener algún valor, este será reemplazado por el nuevo valor.
+-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Tabla Puestos Vacantes</title>
+    <script src="./jquery-3.3.1.js"></script>
+    <script>
+          
+          $(document).ready(function() {
+              var contFisioterapia = 0;
+              var contTotalAlumnos = 0;
+              var contMujEnfermeria = 0;
+              var contHomEnfermeria = 0;
+              var contMujFisioterapia = 0;
+              var contHomFisioterapia = 0;
+            /*
+                Todos los campos de texto deberán aparecer inhabilitados al iniciarse el Formulario, así como también
+                las listas desplegables.
+            */
+            $("input").prop('disabled', true); 
+            $('input[name=carreras]', '#formularioCarreras').prop('disabled', false);  
+            $("select").prop('disabled', true); 
+            /*
+                El Género deberá estar seleccionada en la opción Seleccione...
+            */
+            $("select[name=cboSexo]").val("0").change();           
+
+            /*
+                Cuando se seleccione una carrera mediante los botones de opción (sólo una opción puede
+                seleccionarse) se deberán habilitar los campos de texto, y el foco deberá ir al campo Nombre.
+            */
+            $('input[name=carreras]', '#formularioCarreras').click(function () {
+                $("select").prop('disabled', false); 
+                $("input").prop('disabled', false); 
+                $("input[name=txtNombre]").focus(); 
+            });  
+
+            /*
+                Una vez cargado los datos y al accionar sobre el botón Inscribir Alumno el programa deberá realizar lo
+                siguiente:
+                o Se deberán validar que los campos de Nombre y Apellido no queden vacíos.
+                o Se deberán validar que la edad sea mayor que 18 años y que el género F ó M sea seleccionado.
+                o Si se cumple los puntos anteriores, se deberán concatenar los datos de Nombre, Edad y Sexo del
+                  Alumno registrado y deberán ser cargados en el modelo de la Lista Desplegable o la Tabla según
+                  la carrera seleccionada.
+            */
+            $(".add").click(function() {
+                var nombre = $("#txtNombre").val();
+                var apellido = $("#txtApellido").val();
+                var telefono = $("#txtTelefono").val();
+                var edad = $("#txtEdad").val();
+                var sexo = $("#cboSexo option:selected").text();
+                console.log($("#cboSexo option:selected").text());
+                console.log($('input[name=carreras]:checked', '#formularioCarreras').val());
+                if(!nombre && !apellido)
+                {
+                    alert("Rellene los datos de nombre y apellido");
+                }
+                else if(edad < 18)
+                {
+                    alert("Indique edad mayor que 18");
+                }
+                else if(sexo === "Seleccione...")
+                {
+                    alert("Indique sexo");
+                }
+                else
+                {
+                    if($('input[name=carreras]:checked', '#formularioCarreras').val() == 3)
+                    {
+                        /*SE AGREGAN LOS ALUMNOS DE ENFERMERIA A LA TABLA*/
+                        var linea = "<tr><td><input type='checkbox' name='select'></td><td>" + nombre + "</td><td>" + apellido + "</td><td>" + edad + "</td></tr>";
+                        $("table.test").append(linea);
+
+                        //Sumar por sexo
+                        if(sexo === "Femenino")
+                        {
+                            contMujEnfermeria++;
+                        }
+                        else
+                        {
+                            contHomEnfermeria++;
+                        }
+                        //Sumar Total Alumnos
+                        contTotalAlumnos++;
+                    }
+                    else if($('input[name=carreras]:checked', '#formularioCarreras').val() == 2)
+                    {
+                        var linea = "<option value=''>" + apellido + "," + nombre + "-" + edad + "</option>";
+                        $("#cboFisioterapia").append(linea);  
+                        //Sumar por sexo
+                        if(sexo === "Femenino")
+                        {
+                            contMujFisioterapia++;
+                        }
+                        else
+                        {
+                            contHomFisioterapia++;
+                        }
+                        //Sumar Total Alumnos
+                        contTotalAlumnos++;
+                    }
+                    else if($('input[name=carreras]:checked', '#formularioCarreras').val() == 1)
+                    {
+                        var linea = "<option value=''>" + apellido + "," + nombre + "-" + edad + "</option>";
+                        $("#cboInformatica").append(linea);  
+                        contTotalAlumnos++;
+                    }
+                }
+                $("#txtTotalHomEnfermeria").val(contHomEnfermeria);
+                $("#txtTotalMujEnfermeria").val(contMujEnfermeria);
+                $("#txtTotalHomFisioterapia").val(contHomFisioterapia);
+                $("#txtTotalMujFisioterapia").val(contMujFisioterapia);
+                $("#txtTotalAlumnos").val(contTotalAlumnos);
+               
+                
+                
+            });
+
+            $("#btnLimpiarTabla").click(function() {
+                cantidadFilasTabla =  $("table.test tr").length;
+                console.log(cantidadFilasTabla);
+                for(i = cantidadFilasTabla; i > 1; i--)
+                {
+                    console.log("Eliminando Fila"+i);
+                    $("table.test tr:last-child").remove();
+                }
+            });
+
+            $("#btnLimpiarDatos").click(function() {
+                $("#cboInformatica").find('option').not(':first').remove();
+                $("#cboFisioterapia").find('option').not(':first').remove();
+                $("#txtNombre").val("");
+                $("#txtApellido").val("");
+                $("#txtTelefono").val("");
+                $("#txtEdad").val("");
+                $("#txtTotalHomEnfermeria").val(0);
+                $("#txtTotalMujEnfermeria").val(0);
+                $("#txtTotalHomFisioterapia").val(0);
+                $("#txtTotalMujFisioterapia").val(0);
+                $("#txtTotalAlumnos").val(0);
+                $("input[name=carreras]").prop('checked', false);
+            });
+
+            $(".delete").click(function() {
+        $("table.test").find('input[name="select"]').each(function() {
+            if ($(this).is(":checked")) {
+                $(this).parents("table.test tr").remove();
+            }
+        });
+    });
+});
+
+    </script>
+    <style>
+      table {
+    margin: 18px 0;
+    width: 100%;
+    border-collapse: collapse;
+}
+table th,
+table td {
+    text-align: left;
+    padding: 6px;
+}
+table,
+th,
+td {
+    border: 1px solid #000;
+}
+    </style>
+</head>
+
+<body>
+    <h1>Listado de Inscriptos</h1>
+        <div id="cajaTabla" style="width: 40%; float: left; margin: 10x 10px 10px 10px; display: inline;">
+            <div id="panelCarreras" style="border: 1px solid; margin-bottom: 20px; width: 100%;">
+            <form id="formularioCarreras">
+                <label style="margin: 5px; font-weight: bold;">Carreras:</label>
+                <input style="margin: 10px;" type="radio" name="carreras" id="carrera1" value="1">Lic. en Informatica
+                <input style="margin: 10px;" type="radio" name="carreras" id="carrera2" value="2">Fisioterapia y Kinesiologia
+                <input style="margin: 10px;" type="radio" name="carreras" id="carrera3" value="3">Lic. en Enfermeria
+            </form>
+            </div>
+            <p>Nombre:
+              <input type="text" name="txtNombre" id="txtNombre" placeholder="Nombre">
+            </p>
+            <p>Apellido:
+              <input type="text" name="txtApellido" id="txtApellido"  placeholder="Apellidos">
+            </p>
+            <p>Telefono:
+              <input type="text" name="txtTelefono" id="txtTelefono"  placeholder="Telefono">
+            </p>
+            <p>Edad:
+              <input type="number" name="txtEdad" id="txtEdad"  placeholder="Edad">
+            </p>
+            <p>
+                Genero:
+              <select name="cboSexo" id="cboSexo">
+                  <option value="0">Seleccione...</option>
+                  <option value="1">Masculino</option>
+                  <option value="2">Femenino</option>
+              </select>
+            </p>
+              
+              <input type="button" class="add" value="Inscribir Alumno">
+              <input type="button" id="btnLimpiarTabla" value="Limpiar Tabla">
+              <input type="button" id="btnLimpiarDatos" value="Limpiar Datos">
+              <br><br>
+              <p style="font-weight: bold;">Lista de Alumnos de Enfermeria</p>
+              <div id="inscripcionesTabla" style="border: 1px solid; margin-bottom: 20px; padding-right: 20px; width: 100%;">
+                  <table class="test" style="margin: 10px;">
+                      <tr>
+                          <th></th>
+                          <th>Nombre</th>
+                          <th>Apellido</th>
+                          <th>Edad</th>
+                      </tr>
+                      <tr>
+                          <td><input type="checkbox" name="select"></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                      </tr>
+              </table>
+               </div>
+            
+            <button type="button" class="delete">Quitar</button>
+          </div>
+          <div style="width: 40%;  float: left; margin: 10px 60px; display: inline;">
+            <label style="font-weight: bold;" for="">Total General Alumnos:</label>
+            <input type="text" name="totalAlumnos" id="txtTotalAlumnos" disabled >
+            <p style="font-weight: bold;">
+                Cantidad de Alumnos por Carrera y Sexo:
+            </p>
+                <div title="text">
+                    <label style="font-weight: bold;" for="">Mujeres Enfermeria:</label>
+                    <input  type="text" name="txtTotalMujEnfermeria" id="txtTotalMujEnfermeria" disabled><br><br>
+                
+                    <label style="font-weight: bold;" for="">Hombres Enfermeria:</label>
+                    <input  type="text" name="txtTotalHomEnfermeria" id="txtTotalHomEnfermeria" disabled><br><br>
+                    <label style="font-weight: bold;" for="">Mujeres Fisioterapia:</label>
+                    <input  type="text" name="txtTotalMujFisioterapia" id="txtTotalMujFisioterapia" disabled><br><br>
+                    <label style="font-weight: bold;" for="">Hombres Fisioterapia:</label>
+                    <input  type="text" name="txtTotalHomFisioterapia" id="txtTotalHomFisioterapia" disabled><br><br>
+                </div>
+                <br>
+                <p style="font-weight: bold;">Lista de Alumnos de Informática</p>
+                <select name="cboInformatica" id="cboInformatica">
+                    <option value="0">Alumnos Informatica Inscriptos</option>
+                </select>
+                <p style="font-weight: bold;">Lista de Alumnos de Fisioterapia</p>
+                <select name="cboFisioterapia" id="cboFisioterapia">
+                    <option value="0">Alumnos Fisioterapia Inscriptos</option>
+                </select>
+        </div>
+          
+    
+    
+</body>
+</html>
